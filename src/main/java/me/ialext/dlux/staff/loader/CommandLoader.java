@@ -11,10 +11,12 @@ import me.fixeddev.commandflow.annotated.part.defaults.DefaultsModule;
 import me.fixeddev.commandflow.bukkit.BukkitAuthorizer;
 import me.fixeddev.commandflow.bukkit.BukkitCommandManager;
 import me.fixeddev.commandflow.bukkit.factory.BukkitModule;
+import me.fixeddev.commandflow.translator.DefaultTranslator;
 import me.ialext.dlux.staff.command.FreezeCommand;
 import me.ialext.dlux.staff.command.RandomTeleportCommand;
 import me.ialext.dlux.staff.command.StaffCommand;
 import me.ialext.dlux.staff.command.VanishCommand;
+import me.ialext.dlux.staff.flow.CustomTranslationProvider;
 import team.unnamed.inject.InjectAll;
 
 @InjectAll
@@ -24,6 +26,8 @@ public class CommandLoader implements Loadable {
     private RandomTeleportCommand randomTeleportCommand;
     private StaffCommand staffCommand;
     private VanishCommand vanishCommand;
+
+    private CustomTranslationProvider translationProvider;
 
     @Override
     public void load() {
@@ -43,6 +47,7 @@ public class CommandLoader implements Loadable {
         AnnotatedCommandTreeBuilder commandBuilder = new AnnotatedCommandTreeBuilderImpl(injector);
         CommandManager commandManager = new BukkitCommandManager(new SimpleCommandManager(new BukkitAuthorizer()),
                 "staff");
+        commandManager.setTranslator(new DefaultTranslator(translationProvider));
 
         for(CommandClass commandClass : commandClasses) {
             commandManager.registerCommands(commandBuilder.fromClass(commandClass));
