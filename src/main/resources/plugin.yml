@@ -1,0 +1,4 @@
+name: Staff
+version: ${project.version}
+main: me.ialext.dlux.staff.Staff
+api-version: 1.16
