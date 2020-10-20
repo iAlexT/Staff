@@ -33,6 +33,7 @@ public class PlayerInteractListener implements Listener {
 
         if (staffCache.exists(player.getUniqueId())) {
             if (item.equals(getVanisher())) {
+                event.setCancelled(true);
                 for (Player p : Bukkit.getOnlinePlayers()) {
                     if (p.canSee(player)) {
                         p.hidePlayer(player);
@@ -43,8 +44,10 @@ public class PlayerInteractListener implements Listener {
 
             }
         } else if (player.getItemInHand().equals(getTeleporter())) {
+            event.setCancelled(true);
             player.teleport(player.getEyeLocation());
         } else if (player.getItemInHand().equals(getRandomTeleporter())) {
+            event.setCancelled(true);
             teleportManager.randomTeleport(player.getUniqueId(), 0, false);
         }
     }

@@ -21,28 +21,13 @@ public class PlayerAttackListener implements Listener {
 
     @EventHandler
     public void onPlayerAttack(EntityDamageByEntityEvent event) {
-        Entity entity = event.getEntity();
-        Entity damager = event.getDamager();
+        Entity player = event.getEntity();
+        Entity attacker = event.getDamager();
 
-        if(!(entity instanceof Player)) return;
-
-        Player playerSender = null;
-        Player playerTarget = (Player) entity;
-
-        if (entity instanceof Projectile) {
-            Projectile projectile = (Projectile) entity;
-
-            ProjectileSource shooter = projectile.getShooter();
-
-            if (shooter instanceof Player) {
-                playerSender = (Player) shooter;
-            }
-        } else if (damager instanceof Player) {
-            playerSender = (Player) damager;
+        if(!(attacker instanceof Player)) {
+            event.setCancelled(true);
         }
 
-        Player player = (Player) entity;
-        Player attacker = (Player) damager;
         if((freezeCache.exists(player.getUniqueId())) || (freezeCache.exists(attacker.getUniqueId()))) {
             event.setCancelled(true);
         }
