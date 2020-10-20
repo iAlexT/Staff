@@ -69,45 +69,12 @@ public class StaffManager {
     }
 
     private void getStaffItems(Player player) {
-        ItemStack freeze = ItemBuilder.newBuilder(Material.BLAZE_ROD)
-                .name(ColorUtil.colorize("&bFreeze &6wand"))
-                .lore(ColorUtil.colorizeList(Arrays.asList("&9- &cUse this wand to freeze players",
-                        "", "&dDlux")))
-                .build();
-
-        ItemStack inspector = ItemBuilder.newBuilder(Material.ENDER_CHEST)
-                .name(ColorUtil.colorize("&9Inspection"))
-                .lore(ColorUtil.colorizeList(Arrays.asList("&9- &cUse this chest to open player inventories",
-                        "", "&dDlux")))
-                .build();
-
-        ItemStack teleport = ItemBuilder.newBuilder(Material.COMPASS)
-                .name(ColorUtil.colorize("&5Teleporter"))
-                .lore(ColorUtil.colorizeList(Arrays.asList(
-                        "&9- &cWith this compass you can teleport there where you are looking",
-                        "&9-", "&bDlux")))
-                .build();
-
-        ItemStack randomTeleport = ItemBuilder.newBuilder(Material.EYE_OF_ENDER)
-                .name(ColorUtil.colorize("&5Random teleport"))
-                .lore(ColorUtil.colorizeList(Arrays.asList("&9- &cWith this eye you can teleport to a random player",
-                        "&9-", "&9- &bDlux")))
-                .build();
-
-        ItemStack vanisher = ItemBuilder.newBuilder(Material.INK_SACK,
-                1,
-                (byte) 9)
-                .name(ColorUtil.colorize("&eToggle vanish"))
-                .lore(ColorUtil.colorizeList(Arrays.asList("&9- &cWith this dye you can toggle vanish",
-                        "&9-", "&9- &bDlux")))
-                .build();
-
         player.getInventory().clear();
-        player.getInventory().setItem(1, freeze);
-        player.getInventory().setItem(3, inspector);
-        player.getInventory().setItem(5, teleport);
-        player.getInventory().setItem(7, randomTeleport);
-        player.getInventory().setItem(9, vanisher);
+        player.getInventory().setItem(1, StaffItems.getFreezeWand());
+        player.getInventory().setItem(3, StaffItems.getInspector());
+        player.getInventory().setItem(5, StaffItems.getTeleporter());
+        player.getInventory().setItem(7, StaffItems.getRandomTeleport());
+        player.getInventory().setItem(9, StaffItems.getVanisher());
     }
 
     private void getPlayerItems(Player player) {

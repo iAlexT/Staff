@@ -1,6 +1,7 @@
 package me.ialext.dlux.staff.listener;
 
 import me.ialext.dlux.staff.CacheMap;
+import me.ialext.dlux.staff.staff.StaffItems;
 import me.ialext.dlux.staff.teleport.TeleportManager;
 import me.ialext.dlux.staff.util.ColorUtil;
 import org.bukkit.Material;
@@ -36,6 +37,8 @@ public class PlayerInteractAtEntityListener implements Listener {
         Entity entity = event.getRightClicked();
 
         if(!(entity instanceof Player)) return;
+
+        ItemStack getInspector = StaffItems.getInspector();
 
         Player clicked = (Player) entity;
         if(clicked.hasPermission("dlux.staff")) return;
