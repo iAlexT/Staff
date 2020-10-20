@@ -3,7 +3,7 @@ package me.ialext.dlux.staff;
 import java.util.Map;
 import java.util.Optional;
 
-public interface Cache<K, V> {
+public interface CacheMap<K, V> {
     Map<K, V> get();
 
     default Optional<V> find(K key) {

@@ -3,7 +3,7 @@ package me.ialext.dlux.staff.command;
 import me.fixeddev.commandflow.annotated.CommandClass;
 import me.fixeddev.commandflow.annotated.annotation.Command;
 import me.fixeddev.commandflow.bukkit.annotation.Sender;
-import me.ialext.dlux.staff.Cache;
+import me.ialext.dlux.staff.CacheMap;
 import me.ialext.dlux.staff.util.ColorUtil;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -17,7 +17,7 @@ public class FreezeCommand implements CommandClass {
 
     @Inject
     @Named("freeze")
-    private Cache<UUID, UUID> freezeCache;
+    private CacheMap<UUID, UUID> freezeCache;
 
     @Command(names = "")
     public boolean mainCommand(@Sender Player sender, OfflinePlayer target) {

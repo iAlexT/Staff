@@ -1,6 +1,6 @@
 package me.ialext.dlux.staff.listener;
 
-import me.ialext.dlux.staff.Cache;
+import me.ialext.dlux.staff.CacheMap;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -15,11 +15,11 @@ public class PlayerPickupItemListener implements Listener {
 
     @Inject
     @Named("staff")
-    private Cache<UUID, ItemStack[]> staffCache;
+    private CacheMap<UUID, ItemStack[]> staffCache;
 
     @Inject
     @Named("freeze")
-    private Cache<UUID, UUID> freezeCache;
+    private CacheMap<UUID, UUID> freezeCache;
 
     @EventHandler
     public void onPickup(PlayerPickupItemEvent event) {

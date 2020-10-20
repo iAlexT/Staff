@@ -1,6 +1,6 @@
 package me.ialext.dlux.staff.listener;
 
-import me.ialext.dlux.staff.Cache;
+import me.ialext.dlux.staff.CacheMap;
 import me.ialext.dlux.staff.teleport.TeleportManager;
 import me.ialext.dlux.staff.util.ColorUtil;
 import org.bukkit.Material;
@@ -21,11 +21,11 @@ public class PlayerInteractAtEntityListener implements Listener {
 
     @Inject
     @Named("staff")
-    private Cache<UUID, ItemStack[]> staffCache;
+    private CacheMap<UUID, ItemStack[]> staffCache;
 
     @Inject
     @Named("freeze")
-    private Cache<UUID, UUID> freezeCache;
+    private CacheMap<UUID, UUID> freezeCache;
 
     @Inject
     private TeleportManager teleportManager;

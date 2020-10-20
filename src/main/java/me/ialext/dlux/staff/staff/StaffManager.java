@@ -1,7 +1,9 @@
 package me.ialext.dlux.staff.staff;
 
-import me.ialext.dlux.staff.Cache;
+import me.ialext.dlux.staff.CacheMap;
+import me.ialext.dlux.staff.CacheSet;
 import me.ialext.dlux.staff.util.ColorUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -20,12 +22,17 @@ public class StaffManager {
 
     @Inject
     @Named("staff")
-    private Cache<UUID, ItemStack[]> staffCache;
+    private CacheMap<UUID, ItemStack[]> staffCache;
+
+    @Inject
+    @Named("vanish")
+    private CacheSet<UUID> vanishCache;
 
     public void enable(Player player) {
         saveItems(player);
         getStaffItems(player);
 
+        hide(player);
         staffCache.add(player.getUniqueId(), player.getInventory().getContents());
         armor.put(player.getUniqueId(), player.getInventory().getContents());
     }
@@ -35,8 +42,25 @@ public class StaffManager {
 
         player.getInventory().setContents(staffCache.get().get(player.getUniqueId()));
 
+        unhide(player);
         staffCache.remove(player.getUniqueId());
         armor.remove(player.getUniqueId());
+    }
+
+    public void hide(Player player) {
+        for(Player players : Bukkit.getOnlinePlayers()) {
+            players.hidePlayer(player);
+        }
+
+        vanishCache.add(player.getUniqueId());
+    }
+
+    public void unhide(Player player) {
+        for(Player players : Bukkit.getOnlinePlayers()) {
+            players.showPlayer(player);
+        }
+
+        vanishCache.remove(player.getUniqueId());
     }
 
     private void saveItems(Player player) {

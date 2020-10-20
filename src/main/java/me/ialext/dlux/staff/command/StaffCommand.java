@@ -3,7 +3,7 @@ package me.ialext.dlux.staff.command;
 import me.fixeddev.commandflow.annotated.CommandClass;
 import me.fixeddev.commandflow.annotated.annotation.Command;
 import me.fixeddev.commandflow.bukkit.annotation.Sender;
-import me.ialext.dlux.staff.Cache;
+import me.ialext.dlux.staff.CacheMap;
 import me.ialext.dlux.staff.staff.StaffManager;
 import me.ialext.dlux.staff.util.ColorUtil;
 import org.bukkit.entity.Player;
@@ -18,7 +18,7 @@ public class StaffCommand implements CommandClass {
 
     @Inject
     @Named("staff")
-    private Cache<UUID, ItemStack[]> staffCache;
+    private CacheMap<UUID, ItemStack[]> staffCache;
 
     @Inject
     private StaffManager staffManager;

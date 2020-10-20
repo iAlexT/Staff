@@ -1,6 +1,6 @@
 package me.ialext.dlux.staff.listener;
 
-import me.ialext.dlux.staff.Cache;
+import me.ialext.dlux.staff.CacheMap;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,7 +14,7 @@ public class PlayerMoveListener implements Listener {
 
     @Inject
     @Named("freeze")
-    private Cache<UUID, UUID> freezeCache;
+    private CacheMap<UUID, UUID> freezeCache;
 
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
