@@ -7,7 +7,8 @@ import team.unnamed.gui.item.type.ItemBuilder;
 
 import java.util.Arrays;
 
-public interface StaffItems {
+public interface ItemFactory {
+
     static ItemStack getFreezeWand() {
         return ItemBuilder.newBuilder(Material.BLAZE_ROD)
                 .name(ColorUtil.colorize("&bFreeze &6wand"))

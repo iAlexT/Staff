@@ -6,10 +6,10 @@ import java.util.List;
 
 public interface ColorUtil {
 
-    public static String colorize(String message) {
+    static String colorize(String message) {
         return ChatColor.translateAlternateColorCodes('&', message);
     }
-    public static List<String> colorizeList(List<String> list) {
+    static List<String> colorizeList(List<String> list) {
         list.replaceAll(line -> ChatColor.translateAlternateColorCodes('&',
                 line));
 

@@ -1,7 +1,8 @@
 package me.ialext.dlux.staff.listener;
 
-import me.ialext.dlux.staff.CacheMap;
-import org.bukkit.entity.Player;
+import me.ialext.dlux.staff.Cache;
+import me.ialext.dlux.staff.util.ColorUtil;
+import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -14,14 +15,21 @@ public class PlayerMoveListener implements Listener {
 
     @Inject
     @Named("freeze")
-    private CacheMap<UUID, UUID> freezeCache;
+    private Cache<UUID, UUID> freezeCache;
 
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
-        Player player = event.getPlayer();
+        UUID player = event.getPlayer().getUniqueId();
 
-        if(freezeCache.exists(player.getUniqueId())) {
-            event.setCancelled(true);
+        Location from = event.getFrom();
+        Location to = event.getTo();
+
+        if(freezeCache.exists(player)) {
+            if((from.getX() != to.getX()) || (from.getY() != to.getY())
+            || (from.getZ() != to.getZ())) {
+                event.setCancelled(true);
+                event.getPlayer().sendMessage(ColorUtil.colorize("&cCannot move while &bfrozen!"));
+            }
         }
     }
 }

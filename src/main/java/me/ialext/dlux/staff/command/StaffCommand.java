@@ -3,7 +3,8 @@ package me.ialext.dlux.staff.command;
 import me.fixeddev.commandflow.annotated.CommandClass;
 import me.fixeddev.commandflow.annotated.annotation.Command;
 import me.fixeddev.commandflow.bukkit.annotation.Sender;
-import me.ialext.dlux.staff.CacheMap;
+import me.ialext.dlux.staff.Cache;
+import me.ialext.dlux.staff.SimpleCache;
 import me.ialext.dlux.staff.staff.StaffManager;
 import me.ialext.dlux.staff.util.ColorUtil;
 import org.bukkit.entity.Player;
@@ -18,7 +19,7 @@ public class StaffCommand implements CommandClass {
 
     @Inject
     @Named("staff")
-    private CacheMap<UUID, ItemStack[]> staffCache;
+    private SimpleCache<UUID> staffCache;
 
     @Inject
     private StaffManager staffManager;
@@ -27,13 +28,13 @@ public class StaffCommand implements CommandClass {
     public boolean mainCommand(@Sender Player sender) {
         if(!staffCache.exists(sender.getUniqueId())) {
             staffManager.enable(sender);
-            sender.sendMessage(ColorUtil.colorize("&aSuccessfully enabled &dStaff mode!"));
-        } else {
-            staffManager.disable(sender);
-            sender.sendMessage(ColorUtil.colorize("&cSuccessfully disabled &dStaff mode!"));
+            staffCache.add(sender.getUniqueId());
 
             return true;
         }
+
+        staffCache.remove(sender.getUniqueId());
+        staffManager.disable(sender);
 
         return true;
     }

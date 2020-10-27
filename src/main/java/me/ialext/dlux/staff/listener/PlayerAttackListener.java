@@ -1,6 +1,6 @@
 package me.ialext.dlux.staff.listener;
 
-import me.ialext.dlux.staff.CacheMap;
+import me.ialext.dlux.staff.Cache;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,18 +15,19 @@ public class PlayerAttackListener implements Listener {
 
     @Inject
     @Named("freeze")
-    private CacheMap<UUID, UUID> freezeCache;
+    private Cache<UUID, UUID> freezeCache;
 
     @EventHandler
     public void onPlayerAttack(EntityDamageByEntityEvent event) {
-        Entity player = event.getEntity();
+        Entity entity = event.getEntity();
         Entity attacker = event.getDamager();
 
-        if(!(attacker instanceof Player)) {
-            event.setCancelled(true);
-        }
+        if((!(entity instanceof Player)) || (!(attacker instanceof Player))) return;
 
-        if((freezeCache.exists(player.getUniqueId())) || (freezeCache.exists(attacker.getUniqueId()))) {
+        Player player = (Player) entity;
+        Player damager = (Player) attacker;
+
+        if((freezeCache.exists(player.getUniqueId())) || (freezeCache.exists(damager.getUniqueId()))) {
             event.setCancelled(true);
         }
     }

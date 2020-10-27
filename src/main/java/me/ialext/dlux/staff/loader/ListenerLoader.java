@@ -15,7 +15,6 @@ public class ListenerLoader implements Loadable {
     private PlayerAttackListener playerAttackListener;
     private PlayerInteractAtEntityListener playerInteractAtEntityListener;
     private PlayerInteractListener playerInteractListener;
-    private PlayerMoveListener playerMoveListener;
     private PlayerPickupItemListener playerPickupItemListener;
     private PlayerDropListener playerDropListener;
 
@@ -27,7 +26,6 @@ public class ListenerLoader implements Loadable {
                 playerAttackListener,
                 playerInteractAtEntityListener,
                 playerInteractListener,
-                playerMoveListener,
                 playerPickupItemListener,
                 playerDropListener
         );

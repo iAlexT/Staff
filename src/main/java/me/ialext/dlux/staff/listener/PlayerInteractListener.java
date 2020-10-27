@@ -1,33 +1,26 @@
 package me.ialext.dlux.staff.listener;
 
-import me.ialext.dlux.staff.CacheMap;
-import me.ialext.dlux.staff.CacheSet;
-import me.ialext.dlux.staff.staff.StaffItems;
+import me.ialext.dlux.staff.SimpleCache;
+import me.ialext.dlux.staff.staff.ItemFactory;
 import me.ialext.dlux.staff.staff.StaffManager;
 import me.ialext.dlux.staff.teleport.TeleportManager;
-import me.ialext.dlux.staff.util.ColorUtil;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
-import team.unnamed.gui.item.type.ItemBuilder;
 import team.unnamed.inject.Inject;
 import team.unnamed.inject.name.Named;
 
-import java.util.Arrays;
 import java.util.UUID;
 
 public class PlayerInteractListener implements Listener {
 
     @Inject
     @Named("staff")
-    private CacheMap<UUID, ItemStack[]> staffCache;
+    private SimpleCache<UUID> staffCache;
 
     @Inject
     private TeleportManager teleportManager;
@@ -37,36 +30,31 @@ public class PlayerInteractListener implements Listener {
 
     @Inject
     @Named("vanish")
-    private CacheSet<UUID> vanishCache;
+    private SimpleCache<UUID> vanishCache;
 
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
-        ItemStack item = event.getPlayer().getItemInHand();
+        ItemStack item = event.getItem();
+        ItemMeta meta = item.getItemMeta();
 
-        ItemStack vanisher = StaffItems.getVanisher();
+        ItemMeta vanisher = ItemFactory.getVanisher().getItemMeta();
 
-        ItemStack teleporter = StaffItems.getTeleporter();
+        ItemMeta teleporter = ItemFactory.getTeleporter().getItemMeta();
 
-        ItemStack randomTeleporter = StaffItems.getRandomTeleport();
+        ItemMeta randomTeleporter = ItemFactory.getRandomTeleport().getItemMeta();
 
-        Action action = event.getAction();
-
-        if ((action.equals(Action.RIGHT_CLICK_BLOCK)) || (action.equals(Action.RIGHT_CLICK_AIR))) {
-            if (staffCache.exists(player.getUniqueId())) {
-                if (item.equals(vanisher)) {
-                    if(!vanishCache.exists(player.getUniqueId())) {
-                        staffManager.hide(player);
-                    } else {
-                        staffManager.unhide(player);
-                    }
+        if(staffCache.exists(player.getUniqueId())) {
+            if(item.hasItemMeta()) {
+                if((meta.getDisplayName().equals(vanisher.getDisplayName())) && (meta.getLore().equals(vanisher.getLore()))) {
+                    staffManager.hideIfVisible(player);
+                } else if((meta.getDisplayName().equals(teleporter.getDisplayName())) && (meta.getLore().equals(teleporter.getLore()))) {
+                    Vector vector = player.getEyeLocation().getDirection().normalize().multiply(2);
+                    player.setVelocity(vector);
+                    
+                } else if((meta.getDisplayName().equals(randomTeleporter.getDisplayName())) && (meta.getLore().equals(randomTeleporter.getLore()))) {
+                    teleportManager.randomTeleport(player.getUniqueId(), 0, false);
                 }
-
-            } else if (player.getItemInHand().equals(teleporter)) {
-                Location location = event.getClickedBlock().getLocation();
-                player.teleport(location);
-            } else if (player.getItemInHand().equals(randomTeleporter)) {
-                teleportManager.randomTeleport(player.getUniqueId(), 0, false);
             }
         }
     }

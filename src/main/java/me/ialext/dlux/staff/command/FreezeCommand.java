@@ -3,7 +3,8 @@ package me.ialext.dlux.staff.command;
 import me.fixeddev.commandflow.annotated.CommandClass;
 import me.fixeddev.commandflow.annotated.annotation.Command;
 import me.fixeddev.commandflow.bukkit.annotation.Sender;
-import me.ialext.dlux.staff.CacheMap;
+import me.ialext.dlux.staff.Cache;
+import me.ialext.dlux.staff.staff.StaffManager;
 import me.ialext.dlux.staff.util.ColorUtil;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -17,7 +18,10 @@ public class FreezeCommand implements CommandClass {
 
     @Inject
     @Named("freeze")
-    private CacheMap<UUID, UUID> freezeCache;
+    private Cache<UUID, UUID> freezeCache;
+
+    @Inject
+    private StaffManager staffManager;
 
     @Command(names = "")
     public boolean mainCommand(@Sender Player sender, OfflinePlayer target) {
@@ -33,18 +37,7 @@ public class FreezeCommand implements CommandClass {
             return true;
         }
 
-        if(!freezeCache.exists(target.getUniqueId())) {
-            freezeCache.add(target.getUniqueId(), sender.getUniqueId());
-            sender.sendMessage(ColorUtil.colorize("&aSuccessfully &bfrozen &e" + target.getName()));
-            target.getPlayer().sendMessage(ColorUtil.colorize("&cYou have been &bfrozen &cby &e" + sender.getName()));
-        } else {
-            freezeCache.remove(target.getUniqueId());
-            sender.sendMessage(ColorUtil.colorize("&aSuccessfully &bun-frozen &e" + target.getName()));
-            target.getPlayer().sendMessage(ColorUtil.colorize("&aYou are no longer frozen!"));
-
-            return true;
-        }
-
+        staffManager.freeze(target.getPlayer(), sender);
         return true;
     }
 }

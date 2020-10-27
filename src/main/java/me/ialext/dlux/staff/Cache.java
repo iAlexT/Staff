@@ -3,7 +3,7 @@ package me.ialext.dlux.staff;
 import java.util.Map;
 import java.util.Optional;
 
-public interface CacheMap<K, V> {
+public interface Cache<K, V> {
     Map<K, V> get();
 
     default Optional<V> find(K key) {
@@ -14,11 +14,17 @@ public interface CacheMap<K, V> {
         get().put(key, value);
     }
 
+    default void addIfAbsent(K key, V value) {
+        if(!get().containsKey(key)) {
+            get().put(key, value);
+        } else {
+            get().remove(key);
+        }
+    }
     default void remove(K key) {
         get().remove(key);
     }
     default boolean exists(K key) {
         return get().containsKey(key);
     }
-
 }

@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class CustomTranslationProvider implements TranslationProvider {
 
-    protected Map<String, String> translations = new HashMap<>();
+    protected final Map<String, String> translations = new HashMap<>();
 
     @Override
     public String getTranslation(Namespace namespace, String key) {

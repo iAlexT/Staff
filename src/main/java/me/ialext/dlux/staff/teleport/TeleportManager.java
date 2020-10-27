@@ -7,6 +7,7 @@ import org.bukkit.plugin.Plugin;
 import team.unnamed.inject.Inject;
 
 import java.util.ArrayList;
+import static java.util.Objects.requireNonNull;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -26,13 +27,10 @@ public class TeleportManager {
      */
     public void startCountdown(UUID player, int delay) {
 
-        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            Bukkit.getPlayer(player).sendMessage(ColorUtil.colorize(
-                    "&fTeleporting in &a" + delay));
-
-        }, delay * 20);
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () ->
+                Bukkit.getPlayer(player).sendMessage(ColorUtil.colorize(
+                "&fTeleporting in &a" + delay)), delay * 20);
     }
-
     /**
      *
      * @param player Player that is gonna be teleported
@@ -42,15 +40,19 @@ public class TeleportManager {
     public void randomTeleport(UUID player, int delay, boolean cooldown) {
         List<Player> onlinePlayers = new ArrayList<>(Bukkit.getOnlinePlayers());
         onlinePlayers.remove(Bukkit.getPlayer(player));
+        if(onlinePlayers.size() == 0) {
+            Bukkit.getPlayer(player).sendMessage(ColorUtil.colorize("&cCannot use random teleport while online players are minor than 2!"));
+
+            return;
+        }
+
         Random random = new Random();
         int randomInt = random.nextInt(onlinePlayers.size());
         Player target = onlinePlayers.get(randomInt);
 
         if(cooldown) {
             startCountdown(player, delay);
-            Bukkit.getPlayer(player).teleport(target);
-        } else {
-            Bukkit.getPlayer(player).teleport(target);
         }
+        Bukkit.getPlayer(player).teleport(target);
     }
 }
