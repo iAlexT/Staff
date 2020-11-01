@@ -2,6 +2,7 @@ package me.ialext.dlux.staff.listener;
 
 import me.ialext.dlux.staff.factory.ItemFactory;
 import me.ialext.dlux.staff.staff.StaffManager;
+import me.ialext.dlux.staff.staff.VanishManager;
 import me.ialext.dlux.staff.teleport.TeleportManager;
 import me.ialext.dlux.staff.util.ValidationUtils;
 import org.bukkit.entity.Player;
@@ -21,6 +22,9 @@ public class PlayerInteractListener implements Listener {
     @Inject
     private StaffManager staffManager;
 
+    @Inject
+    private VanishManager vanishManager;
+
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
@@ -37,10 +41,10 @@ public class PlayerInteractListener implements Listener {
         if(staffManager.isInStaffMode(player.getUniqueId())) {
             if(item.hasItemMeta()) {
                 if(ValidationUtils.compareItems(item, vanisher)) {
-                    if(!staffManager.isHidden(player.getUniqueId())) {
-                        staffManager.hide(player.getUniqueId());
+                    if(!vanishManager.isHidden(player.getUniqueId())) {
+                        vanishManager.hide(player.getUniqueId());
                     } else {
-                        staffManager.show(player.getUniqueId());
+                        vanishManager.show(player.getUniqueId());
                     }
                 }
 

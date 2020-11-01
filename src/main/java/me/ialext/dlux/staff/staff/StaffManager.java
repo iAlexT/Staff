@@ -11,9 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import team.unnamed.inject.Inject;
 import team.unnamed.inject.name.Named;
 
-import java.util.Arrays;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import static org.bukkit.Bukkit.getPlayer;
 
@@ -52,25 +50,6 @@ public class StaffManager {
         return staffCache.exists(player);
     }
 
-    public boolean isHidden(UUID player) {
-        Optional<? extends Player> players = Bukkit.getOnlinePlayers().stream().filter(p -> p.canSee(getPlayer(player))).findAny();
-
-        return players.map(p -> p.canSee(getPlayer(player))).orElse(false);
-    }
-
-    public void hide(UUID player) {
-        Bukkit.getOnlinePlayers().forEach(p -> p.hidePlayer(getPlayer(player)));
-
-        vanishCache.add(player);
-        getPlayer(player).sendMessage(ColorUtil.colorize("&eSuccessfully &aenabled &dVanish mode"));
-    }
-
-    public void show(UUID player) {
-        Bukkit.getOnlinePlayers().forEach(p -> p.showPlayer(getPlayer(player)));
-
-        vanishCache.remove(player);
-        getPlayer(player).sendMessage(ColorUtil.colorize("&eSuccessfully &cdisabled &dVanish mode"));
-    }
     private void saveItems(UUID player) {
         itemsCache.add(player, getPlayer(player).getInventory().getContents());
     }

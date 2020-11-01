@@ -51,7 +51,11 @@ public class PlayerInteractAtEntityListener implements Listener {
                 }
 
                 if(ValidationUtils.compareItems(item, freezeWand)) {
-                    freezeManager.freezePlayer(clicked.getUniqueId(), player.getUniqueId());
+                    if(!freezeManager.isFrozen(clicked.getUniqueId())) {
+                        freezeManager.freezePlayer(clicked.getUniqueId(), player.getUniqueId());
+                    } else {
+                        freezeManager.unfreezePlayer(clicked.getUniqueId());
+                    }
                 }
             }
         }

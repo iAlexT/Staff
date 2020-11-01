@@ -4,6 +4,7 @@ import me.fixeddev.commandflow.annotated.CommandClass;
 import me.fixeddev.commandflow.annotated.annotation.Command;
 import me.fixeddev.commandflow.bukkit.annotation.Sender;
 import me.ialext.dlux.staff.staff.StaffManager;
+import me.ialext.dlux.staff.staff.VanishManager;
 import org.bukkit.entity.Player;
 import team.unnamed.inject.Inject;
 
@@ -11,17 +12,17 @@ import team.unnamed.inject.Inject;
 public class VanishCommand implements CommandClass {
 
     @Inject
-    private StaffManager staffManager;
+    private VanishManager vanishManager;
 
     @Command(names = "")
     public boolean mainCommand(@Sender Player sender) {
-        if(!staffManager.isHidden(sender.getUniqueId())) {
-            staffManager.hide(sender.getUniqueId());
+        if(!vanishManager.isHidden(sender.getUniqueId())) {
+            vanishManager.hide(sender.getUniqueId());
 
             return true;
         }
 
-        staffManager.show(sender.getUniqueId());
+        vanishManager.show(sender.getUniqueId());
 
         return true;
     }
