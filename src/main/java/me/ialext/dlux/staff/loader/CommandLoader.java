@@ -17,7 +17,6 @@ import me.ialext.dlux.staff.command.RandomTeleportCommand;
 import me.ialext.dlux.staff.command.StaffCommand;
 import me.ialext.dlux.staff.command.VanishCommand;
 import me.ialext.dlux.staff.flow.CustomTranslationProvider;
-import me.ialext.dlux.staff.flow.CustomUsageBuilder;
 import team.unnamed.inject.InjectAll;
 
 @InjectAll
@@ -49,7 +48,6 @@ public class CommandLoader implements Loadable {
         CommandManager commandManager = new BukkitCommandManager(new SimpleCommandManager(new BukkitAuthorizer()),
                 "staff");
         commandManager.setTranslator(new DefaultTranslator(translationProvider));
-        commandManager.setUsageBuilder(new CustomUsageBuilder());
 
         for(CommandClass commandClass : commandClasses) {
             commandManager.registerCommands(commandBuilder.fromClass(commandClass));

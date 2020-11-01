@@ -4,7 +4,6 @@ import me.fixeddev.commandflow.annotated.CommandClass;
 import me.fixeddev.commandflow.annotated.annotation.Command;
 import me.fixeddev.commandflow.bukkit.annotation.Sender;
 import me.ialext.dlux.staff.teleport.TeleportManager;
-import me.ialext.dlux.staff.util.ColorUtil;
 import org.bukkit.entity.Player;
 import team.unnamed.inject.Inject;
 
@@ -16,8 +15,7 @@ public class RandomTeleportCommand implements CommandClass {
 
     @Command(names = "")
     public boolean mainCommand(@Sender Player sender) {
-        teleportManager.randomTeleport(sender.getUniqueId(), 5, true);
-        sender.sendMessage(ColorUtil.colorize("&aSuccessfully teleported"));
+        teleportManager.randomTeleport(sender.getUniqueId());
 
         return true;
     }

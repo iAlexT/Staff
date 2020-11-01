@@ -1,31 +1,25 @@
 package me.ialext.dlux.staff.listener;
 
-import me.ialext.dlux.staff.Cache;
-import me.ialext.dlux.staff.SimpleCache;
+import me.ialext.dlux.staff.staff.FreezeManager;
+import me.ialext.dlux.staff.staff.StaffManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.inventory.ItemStack;
 import team.unnamed.inject.Inject;
-import team.unnamed.inject.name.Named;
-
-import java.util.UUID;
 
 public class PlayerDropListener implements Listener {
 
     @Inject
-    @Named("freeze")
-    private Cache<UUID, UUID> freezeCache;
+    private StaffManager staffManager;
 
     @Inject
-    @Named("staff")
-    private SimpleCache<UUID> staffCache;
+    private FreezeManager freezeManager;
 
     @EventHandler
     public void onDrop(PlayerDropItemEvent event) {
         Player player = event.getPlayer();
-        if((freezeCache.exists(player.getUniqueId())) || (staffCache.exists(player.getUniqueId()))) {
+        if((staffManager.isInStaffMode(player.getUniqueId())) || (freezeManager.isFrozen(player.getUniqueId()))) {
             event.setCancelled(true);
         }
     }

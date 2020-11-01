@@ -1,4 +1,4 @@
-package me.ialext.dlux.staff.staff;
+package me.ialext.dlux.staff.factory;
 
 import me.ialext.dlux.staff.util.ColorUtil;
 import org.bukkit.Material;

@@ -1,31 +1,25 @@
 package me.ialext.dlux.staff.listener;
 
-import me.ialext.dlux.staff.Cache;
-import me.ialext.dlux.staff.SimpleCache;
+import me.ialext.dlux.staff.staff.FreezeManager;
+import me.ialext.dlux.staff.staff.StaffManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerPickupItemEvent;
-import org.bukkit.inventory.ItemStack;
 import team.unnamed.inject.Inject;
-import team.unnamed.inject.name.Named;
-
-import java.util.UUID;
 
 public class PlayerPickupItemListener implements Listener {
 
     @Inject
-    @Named("staff")
-    private SimpleCache<UUID> staffCache;
+    private StaffManager staffManager;
 
     @Inject
-    @Named("freeze")
-    private Cache<UUID, UUID> freezeCache;
+    private FreezeManager freezeManager;
 
     @EventHandler
     public void onPickup(PlayerPickupItemEvent event) {
         Player player = event.getPlayer();
-        if((staffCache.exists(player.getUniqueId())) || (freezeCache.exists(player.getUniqueId()))) {
+        if((staffManager.isInStaffMode(player.getUniqueId())) || (freezeManager.isFrozen(player.getUniqueId()))) {
             event.setCancelled(true);
         }
     }

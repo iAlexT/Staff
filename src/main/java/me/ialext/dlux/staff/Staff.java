@@ -1,7 +1,6 @@
 package me.ialext.dlux.staff;
 
 import me.ialext.dlux.staff.module.MainModule;
-import me.ialext.dlux.staff.service.Service;
 import me.ialext.dlux.staff.service.StaffService;
 import org.bukkit.plugin.java.JavaPlugin;
 import team.unnamed.inject.Inject;

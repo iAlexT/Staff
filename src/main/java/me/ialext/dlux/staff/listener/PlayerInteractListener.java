@@ -1,26 +1,19 @@
 package me.ialext.dlux.staff.listener;
 
-import me.ialext.dlux.staff.SimpleCache;
-import me.ialext.dlux.staff.staff.ItemFactory;
+import me.ialext.dlux.staff.factory.ItemFactory;
 import me.ialext.dlux.staff.staff.StaffManager;
 import me.ialext.dlux.staff.teleport.TeleportManager;
+import me.ialext.dlux.staff.util.ValidationUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
 import team.unnamed.inject.Inject;
-import team.unnamed.inject.name.Named;
-
-import java.util.UUID;
 
 public class PlayerInteractListener implements Listener {
 
-    @Inject
-    @Named("staff")
-    private SimpleCache<UUID> staffCache;
 
     @Inject
     private TeleportManager teleportManager;
@@ -28,31 +21,35 @@ public class PlayerInteractListener implements Listener {
     @Inject
     private StaffManager staffManager;
 
-    @Inject
-    @Named("vanish")
-    private SimpleCache<UUID> vanishCache;
-
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         ItemStack item = event.getItem();
-        ItemMeta meta = item.getItemMeta();
 
-        ItemMeta vanisher = ItemFactory.getVanisher().getItemMeta();
+        ItemStack vanisher = ItemFactory.getVanisher();
 
-        ItemMeta teleporter = ItemFactory.getTeleporter().getItemMeta();
+        ItemStack teleporter = ItemFactory.getTeleporter();
 
-        ItemMeta randomTeleporter = ItemFactory.getRandomTeleport().getItemMeta();
+        ItemStack randomTeleporter = ItemFactory.getRandomTeleport();
 
-        if(staffCache.exists(player.getUniqueId())) {
+        if(item == null) return;
+        
+        if(staffManager.isInStaffMode(player.getUniqueId())) {
             if(item.hasItemMeta()) {
-                if((meta.getDisplayName().equals(vanisher.getDisplayName())) && (meta.getLore().equals(vanisher.getLore()))) {
-                    staffManager.hideIfVisible(player);
-                } else if((meta.getDisplayName().equals(teleporter.getDisplayName())) && (meta.getLore().equals(teleporter.getLore()))) {
+                if(ValidationUtils.compareItems(item, vanisher)) {
+                    if(!staffManager.isHidden(player.getUniqueId())) {
+                        staffManager.hide(player.getUniqueId());
+                    } else {
+                        staffManager.show(player.getUniqueId());
+                    }
+                }
+
+                if(ValidationUtils.compareItems(item, teleporter)) {
                     Vector vector = player.getEyeLocation().getDirection().normalize().multiply(2);
                     player.setVelocity(vector);
-                    
-                } else if((meta.getDisplayName().equals(randomTeleporter.getDisplayName())) && (meta.getLore().equals(randomTeleporter.getLore()))) {
+                }
+
+                if(ValidationUtils.compareItems(item, randomTeleporter)) {
                     teleportManager.randomTeleport(player.getUniqueId(), 0, false);
                 }
             }

@@ -1,21 +1,21 @@
 package me.ialext.dlux.staff.listener;
 
-import me.ialext.dlux.staff.Cache;
+import me.ialext.dlux.staff.staff.FreezeManager;
+import me.ialext.dlux.staff.staff.StaffManager;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import team.unnamed.inject.Inject;
-import team.unnamed.inject.name.Named;
-
-import java.util.UUID;
 
 public class PlayerAttackListener implements Listener {
 
     @Inject
-    @Named("freeze")
-    private Cache<UUID, UUID> freezeCache;
+    private StaffManager staffManager;
+
+    @Inject
+    private FreezeManager freezeManager;
 
     @EventHandler
     public void onPlayerAttack(EntityDamageByEntityEvent event) {
@@ -27,7 +27,7 @@ public class PlayerAttackListener implements Listener {
         Player player = (Player) entity;
         Player damager = (Player) attacker;
 
-        if((freezeCache.exists(player.getUniqueId())) || (freezeCache.exists(damager.getUniqueId()))) {
+        if((staffManager.isInStaffMode(player.getUniqueId())) || (freezeManager.isFrozen(player.getUniqueId()))) {
             event.setCancelled(true);
         }
     }

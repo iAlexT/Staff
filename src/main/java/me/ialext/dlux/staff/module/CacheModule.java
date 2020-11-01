@@ -12,7 +12,6 @@ import team.unnamed.inject.identity.Key;
 import team.unnamed.inject.identity.type.TypeReference;
 import team.unnamed.inject.name.Names;
 
-import java.util.List;
 import java.util.UUID;
 
 public class CacheModule extends AbstractModule {

@@ -6,9 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import team.unnamed.inject.Inject;
 
-import java.util.ArrayList;
-import static java.util.Objects.requireNonNull;
-import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
 
@@ -38,21 +36,23 @@ public class TeleportManager {
      * @param cooldown Teleport is instant
      */
     public void randomTeleport(UUID player, int delay, boolean cooldown) {
-        List<Player> onlinePlayers = new ArrayList<>(Bukkit.getOnlinePlayers());
-        onlinePlayers.remove(Bukkit.getPlayer(player));
-        if(onlinePlayers.size() == 0) {
-            Bukkit.getPlayer(player).sendMessage(ColorUtil.colorize("&cCannot use random teleport while online players are minor than 2!"));
+        Random r = new Random();
+        Optional<? extends Player> target = Bukkit.getOnlinePlayers().stream().filter(p -> p.getUniqueId() != player).findAny();
+        if(!target.isPresent()) {
+            Bukkit.getPlayer(player).sendMessage(ColorUtil.colorize("&cCannot use random teleport if online players is minor than 2"));
 
-            return;
+        } else {
+            Bukkit.getPlayer(player).teleport(target.get());
         }
+    }
 
-        Random random = new Random();
-        int randomInt = random.nextInt(onlinePlayers.size());
-        Player target = onlinePlayers.get(randomInt);
-
-        if(cooldown) {
-            startCountdown(player, delay);
+    public void randomTeleport(UUID player) {
+        Random r = new Random();
+        Optional<? extends Player> target = Bukkit.getOnlinePlayers().stream().filter(p -> p.getUniqueId() != player).findAny();
+        if(!target.isPresent()) {
+            Bukkit.getPlayer(player).sendMessage(ColorUtil.colorize("&cCannot use random teleport yet, you're alone in the server!"));
+        } else {
+            Bukkit.getPlayer(player).teleport(target.get());
         }
-        Bukkit.getPlayer(player).teleport(target);
     }
 }
