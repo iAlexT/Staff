@@ -21,6 +21,7 @@ public interface Cache<K, V> {
             get().remove(key);
         }
     }
+
     default void remove(K key) {
         get().remove(key);
     }

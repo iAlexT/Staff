@@ -2,10 +2,7 @@ package me.ialext.dlux.staff.module;
 
 import me.ialext.dlux.staff.Cache;
 import me.ialext.dlux.staff.SimpleCache;
-import me.ialext.dlux.staff.cache.FreezeCache;
-import me.ialext.dlux.staff.cache.ItemsCache;
-import me.ialext.dlux.staff.cache.StaffCache;
-import me.ialext.dlux.staff.cache.VanishCache;
+import me.ialext.dlux.staff.cache.*;
 import org.bukkit.inventory.ItemStack;
 import team.unnamed.inject.bind.AbstractModule;
 import team.unnamed.inject.identity.Key;
@@ -29,5 +26,8 @@ public class CacheModule extends AbstractModule {
 
         bind(Key.of(new TypeReference<Cache<UUID, ItemStack[]>>() {
             }, Names.named("items"))).to(ItemsCache.class).singleton();
+
+        bind(Key.of(new TypeReference<SimpleCache<UUID>>() {
+            }, Names.named("staff-chat"))).to(StaffChatCache.class).singleton();
     }
 }

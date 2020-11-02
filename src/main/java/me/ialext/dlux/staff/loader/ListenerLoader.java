@@ -17,6 +17,7 @@ public class ListenerLoader implements Loadable {
     private PlayerInteractListener playerInteractListener;
     private PlayerPickupItemListener playerPickupItemListener;
     private PlayerDropListener playerDropListener;
+    private AsynchronousPlayerChatListener asynchronousPlayerChatListener;
 
     @Override
     public void load() {
@@ -27,10 +28,12 @@ public class ListenerLoader implements Loadable {
                 playerInteractAtEntityListener,
                 playerInteractListener,
                 playerPickupItemListener,
-                playerDropListener
+                playerDropListener,
+                asynchronousPlayerChatListener
         );
-    }
 
+    }
+    
     private void registerListeners(Listener... listeners) {
         for(Listener listener : listeners) {
             plugin.getServer().getPluginManager().registerEvents(listener, plugin);

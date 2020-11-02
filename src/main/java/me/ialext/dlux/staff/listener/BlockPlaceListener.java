@@ -23,4 +23,5 @@ public class BlockPlaceListener implements Listener {
             event.setCancelled(true);
         }
     }
+
 }
