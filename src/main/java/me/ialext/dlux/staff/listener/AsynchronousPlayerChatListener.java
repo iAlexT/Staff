@@ -1,6 +1,6 @@
 package me.ialext.dlux.staff.listener;
 
-import me.ialext.dlux.staff.files.FileManager;
+import me.ialext.dlux.staff.files.FileCreator;
 import me.ialext.dlux.staff.staff.StaffChatManager;
 import me.ialext.dlux.staff.util.ColorUtil;
 import org.bukkit.Bukkit;
@@ -18,7 +18,7 @@ public class AsynchronousPlayerChatListener implements Listener {
 
     @Inject
     @Named("config")
-    private FileManager config;
+    private FileCreator config;
 
     @EventHandler
     public void onPlayerChat(AsyncPlayerChatEvent event) {
