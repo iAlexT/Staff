@@ -24,6 +24,7 @@ public class CommandLoader implements Loadable {
     private StaffCommand staffCommand;
     private VanishCommand vanishCommand;
     private StaffChatCommand staffChatCommand;
+    private TestCommand testCommand;
 
     private CustomTranslationProvider translationProvider;
 
@@ -34,7 +35,8 @@ public class CommandLoader implements Loadable {
                 randomTeleportCommand,
                 staffCommand,
                 vanishCommand,
-                staffChatCommand
+                staffChatCommand,
+                testCommand
         );
     }
 

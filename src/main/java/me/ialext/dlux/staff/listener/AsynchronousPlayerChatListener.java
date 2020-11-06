@@ -26,13 +26,21 @@ public class AsynchronousPlayerChatListener implements Listener {
         String format = config.getString("chat.staff.format")
                 .replace("%player%", player.getName());
 
-        if(staffChatManager.isEnabled(player.getUniqueId())) {
+        if (staffChatManager.isEnabled(player.getUniqueId())) {
             event.setCancelled(true);
 
             Bukkit.getOnlinePlayers()
                     .stream()
                     .filter(p -> p.hasPermission("dlux.staff"))
                     .forEach(p -> p.sendMessage(ColorUtil.colorize(format + event.getMessage())));
+        }
+
+        if (!player.hasPermission("dlux.staff")) {
+            config.getStringList("chat.blocked-words")
+                    .forEach(string -> {
+                        if (event.getMessage().contains(string)) {
+                            event.setMessage(ColorUtil.colorize("&c" + '\u2764'));
+                        }});
         }
     }
 }

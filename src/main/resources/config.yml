@@ -1,3 +1,5 @@
 chat:
+  blocked-words:
+    - "puto"
   staff:
     format: "&b[&9&lSC&b] &e%player% → &r%message%"
