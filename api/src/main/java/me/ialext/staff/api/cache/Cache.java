@@ -1,5 +1,6 @@
 package me.ialext.staff.api.cache;
 
+import me.ialext.staff.api.database.Repository;
 import me.ialext.staff.api.model.SavableModel;
 
 import java.util.Optional;
