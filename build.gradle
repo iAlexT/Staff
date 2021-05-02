@@ -24,6 +24,7 @@ subprojects {
     implementation 'net.kyori:text-serializer-plain:3.0.0-stripped'
     implementation 'net.kyori:text-serializer-legacy:3.0.0-stripped'
     implementation 'net.kyori:text-serializer-gson:3.0.4'
+    implementation 'com.google.code.gson:gson:2.8.6'
   }
 
   test {
