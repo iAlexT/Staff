@@ -1,22 +1,32 @@
-plugins {
-  id 'java'
-}
+subprojects {
+  group 'me.ialext.staff'
+  version '0.0.1-SNAPSHOT'
+  apply plugin: 'java'
 
-group 'me.ialext'
-version '0.0.1-SNAPSHOT'
+  repositories {
+    mavenCentral()
+    mavenLocal()
+    maven  { url 'https://repo.unnamed.team/repository/unnamed-releases/' }
+  }
 
-repositories {
-  mavenCentral()
-  mavenLocal()
-  maven { url 'https://repo.unnamed.team/repository/unnamed-releases' }
-}
+  dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    compileOnly 'org.spigotmc:spigot:1.8.8-R0.1-SNAPSHOT'
+    implementation 'me.yushust.inject:core:0.4.2-SNAPSHOT'
+    implementation 'me.yushust.message:core:6.0.16'
+    implementation 'me.yushust.message:sourcetype-bukkit-yml:6.0.16'
+    implementation 'me.fixeddev:commandflow-universal:0.4.5@jar'
+    implementation 'me.fixeddev:commandflow-bukkit:0.4.0@jar'
+    implementation('net.kyori:text-api:3.0.0-stripped') {
+      exclude group: 'org.checkerframework', module: 'checkerframework-qual'
+    }
+    implementation 'net.kyori:text-serializer-plain:3.0.0-stripped'
+    implementation 'net.kyori:text-serializer-legacy:3.0.0-stripped'
+    implementation 'net.kyori:text-serializer-gson:3.0.4'
+  }
 
-dependencies {
-  testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
-  testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
-  compileOnly 'org.spigotmc:spigot:1.8.8-R0.1-SNAPSHOT'
-}
-
-test {
-  useJUnitPlatform()
+  test {
+    useJUnitPlatform()
+  }
 }
