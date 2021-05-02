@@ -5,7 +5,6 @@ import me.ialext.staff.api.model.SavableModel;
 
 import java.util.Optional;
 import java.util.Set;
-import java.util.concurrent.ExecutionException;
 
 /**
  * A common cache and simple cache layer that is
@@ -37,7 +36,7 @@ public interface Cache<O extends SavableModel> {
    * @return An optional {@link O} value,
    * result of the cache/object repository search.
    */
-  Optional<O> findOrGet(String id) throws ExecutionException, InterruptedException;
+  Optional<O> findOrGet(String id);
 
   /**
    * Get all cached {@link O}s by this {@link Cache}.
