@@ -11,7 +11,9 @@ import java.util.UUID;
 
 public interface User extends SavableModel {
 
-  @SerializedName("punishments") List<Punishment> getPunishments();
+  @SerializedName("activePunishments") List<Punishment> getActivePunishments();
+
+  @SerializedName("pastPunishments") List<Punishment> getPastPunishments();
 
   default Player getPlayer() {
     return Bukkit.getPlayer(
